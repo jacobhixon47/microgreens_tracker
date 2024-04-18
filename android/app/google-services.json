@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "194115889709",
+    "project_id": "microgreens-tracker-88d19",
+    "storage_bucket": "microgreens-tracker-88d19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194115889709:android:ce7a96b7fc29135ab4e6a4",
+        "android_client_info": {
+          "package_name": "com.example.microgreens_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAitvROQt6Y7glgHBMnsJRDwmVRXvNVhKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
