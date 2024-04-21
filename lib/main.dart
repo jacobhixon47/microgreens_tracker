@@ -21,33 +21,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: AppThemes.darkTheme,
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('MicroMonitor'),
-            actions: <Widget>[
-              StreamBuilder<User?>(
-                stream: FirebaseAuth.instance.authStateChanges(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData && snapshot.data != null) {
-                    // User is signed in
-                    return IconButton(
-                      icon: const Icon(Icons.exit_to_app),
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                      },
-                      tooltip: 'Sign Out',
-                    );
-                  } else {
-                    // User is signed out
-                    return const SizedBox(); // Return an empty widget if user is not signed in
-                  }
-                },
-              ),
-            ],
-          ),
-          body: const AuthWrapper(),
-        ));
+      title: 'Flutter Demo',
+      theme: AppThemes.darkTheme,
+      home: AuthWrapper(),
+    );
   }
 }

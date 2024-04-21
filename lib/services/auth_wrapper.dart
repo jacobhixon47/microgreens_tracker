@@ -1,28 +1,69 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../pages/home_page.dart';
-import '../pages/auth_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:ui';
 
-class AuthWrapper extends StatelessWidget {
+import '../pages/home_page.dart';
+import '../pages/profile_page.dart';
+import '../pages/auth_page.dart';
+
+class AuthWrapper extends StatefulWidget {
   const AuthWrapper({super.key});
+
+  @override
+  State<AuthWrapper> createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
+  // int _selectedIndex = 0;
+  final PageController _pageController = PageController();
+
+  // @override
+  // void dispose() {
+  //   _pageController.dispose();
+  //   super.dispose();
+  // }
+
+  void _onItemTapped(int index) {
+    _pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+  }
+
   @override
   Widget build(BuildContext context) {
+    debugPrint('AuthWrapper built');
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           User? user = snapshot.data;
           if (user == null) {
-            return const AuthPage();
+            return const Scaffold(body: AuthPage());
           } else {
             return Scaffold(
-              body: const HomePage(),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              floatingActionButton: FloatingActionButton(
-                child: const Icon(Icons.add),
-                onPressed: () {},
+              appBar: AppBar(
+                title: const Text('MicroMonitor'),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.exit_to_app),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    tooltip: 'Sign Out',
+                  ),
+                ],
+              ),
+              body: PageView(
+                controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                onPageChanged: (index) {
+                  debugPrint("Page changed to: $index");
+                },
+                children: const [
+                  HomePage(),
+                  Scaffold(), // Placeholder for other pages
+                  Scaffold(),
+                  ProfilePage() // Placeholder for other pages
+                ],
               ),
               bottomNavigationBar: BottomAppBar(
                 shape: const CircularNotchedRectangle(),
@@ -36,23 +77,33 @@ class AuthWrapper extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           IconButton(
-                              icon: const Icon(Icons.grass_outlined),
-                              onPressed: () {}),
+                            icon: const Icon(Icons.home),
+                            onPressed: () => _onItemTapped(0),
+                          ),
                           IconButton(
-                              icon: const Icon(Icons.bar_chart_outlined),
-                              onPressed: () {}),
-                          // const SizedBox(), // Space for the FAB
+                            icon: const Icon(Icons.account_circle),
+                            onPressed: () => _onItemTapped(1),
+                          ),
                           IconButton(
-                              icon: const Icon(Icons.schedule_outlined),
-                              onPressed: () {}),
+                            icon: const Icon(Icons.settings),
+                            onPressed: () => _onItemTapped(2),
+                          ),
                           IconButton(
-                              icon: const Icon(Icons.account_circle),
-                              onPressed: () {}),
+                            icon: const Icon(Icons.more_horiz),
+                            onPressed: () => _onItemTapped(3),
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+              floatingActionButton: FloatingActionButton(
+                child: const Icon(Icons.add),
+                onPressed:
+                    () {}, // Define your floating action button functionality here
               ),
             );
           }
