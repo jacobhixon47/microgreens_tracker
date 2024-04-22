@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'themes/app_themes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'services/auth_wrapper.dart';
 
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppThemes.darkTheme,
-      home: AuthWrapper(),
+      home: const AuthWrapper(),
     );
   }
 }

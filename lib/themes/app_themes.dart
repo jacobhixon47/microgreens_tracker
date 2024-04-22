@@ -16,7 +16,7 @@ class AppThemes {
       brightness: Brightness.dark,
       highlightColor: Colors.greenAccent,
       primaryColor: Colors.lightBlue[800],
-      fontFamily: 'Georgia',
+      fontFamily: 'Impact',
       textTheme: const TextTheme(
         displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
         titleLarge: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),

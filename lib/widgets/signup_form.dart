@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpFormState createState() => _SignUpFormState();
 }
 
@@ -42,6 +43,7 @@ class _SignUpFormState extends State<SignUpForm> {
       } catch (e) {
         // Handle errors or display an error message
         debugPrint('Error: $e');
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to register: $e')),
         );

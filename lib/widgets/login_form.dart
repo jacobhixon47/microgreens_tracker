@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _LoginFormState createState() => _LoginFormState();
 }
 
@@ -18,7 +19,8 @@ class _LoginFormState extends State<LoginForm> {
           .signInWithEmailAndPassword(email: _email, password: _password);
       debugPrint('User logged in successfully');
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Failed to log in: $e')));
     }
