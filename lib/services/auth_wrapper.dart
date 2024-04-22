@@ -14,8 +14,14 @@ class AuthWrapper extends StatefulWidget {
 }
 
 class _AuthWrapperState extends State<AuthWrapper> {
-  // int _selectedIndex = 0;
-  final PageController _pageController = PageController();
+  int _selectedIndex = 0;
+  // final PageController _pageController = PageController();
+  final List<Widget> _pages = [
+    const HomePage(),
+    const Scaffold(),
+    const Scaffold(),
+    ProfilePage()
+  ];
 
   // @override
   // void dispose() {
@@ -24,8 +30,9 @@ class _AuthWrapperState extends State<AuthWrapper> {
   // }
 
   void _onItemTapped(int index) {
-    _pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    setState(() => _selectedIndex = index);
+    // _pageController.animateToPage(index,
+    //     duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   @override
@@ -52,19 +59,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
                   ),
                 ],
               ),
-              body: PageView(
-                controller: _pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (index) {
-                  debugPrint("Page changed to: $index");
-                },
-                children: const [
-                  HomePage(),
-                  Scaffold(), // Placeholder for other pages
-                  Scaffold(),
-                  ProfilePage() // Placeholder for other pages
-                ],
-              ),
+              body: _pages[_selectedIndex],
               bottomNavigationBar: BottomAppBar(
                 shape: const CircularNotchedRectangle(),
                 notchMargin: 6.0,
@@ -77,19 +72,27 @@ class _AuthWrapperState extends State<AuthWrapper> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           IconButton(
-                            icon: const Icon(Icons.home),
+                            icon: const Icon(Icons.house),
+                            color:
+                                _selectedIndex == 0 ? Colors.greenAccent : null,
                             onPressed: () => _onItemTapped(0),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.account_circle),
+                            icon: const Icon(Icons.settings),
+                            color:
+                                _selectedIndex == 1 ? Colors.greenAccent : null,
                             onPressed: () => _onItemTapped(1),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.settings),
+                            icon: const Icon(Icons.more_horiz),
+                            color:
+                                _selectedIndex == 2 ? Colors.greenAccent : null,
                             onPressed: () => _onItemTapped(2),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.more_horiz),
+                            icon: const Icon(Icons.account_circle),
+                            color:
+                                _selectedIndex == 3 ? Colors.greenAccent : null,
                             onPressed: () => _onItemTapped(3),
                           ),
                         ],
@@ -99,7 +102,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
                 ),
               ),
               floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
+                  FloatingActionButtonLocation.miniEndFloat,
               floatingActionButton: FloatingActionButton(
                 child: const Icon(Icons.add),
                 onPressed:
