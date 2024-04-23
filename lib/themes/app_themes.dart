@@ -28,7 +28,7 @@ class AppThemes {
           highlightColor: Colors.greenAccent,
           splashColor: Colors.greenAccent),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Colors.greenAccent,
-          foregroundColor: Colors.blueGrey,
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.black87,
           shape: CircleBorder()));
 }
