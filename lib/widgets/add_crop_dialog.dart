@@ -65,6 +65,7 @@ class _AddCropDialogState extends State<AddCropDialog> {
     return firestore.runTransaction((transaction) async {
       // Subtract the grams used from the seed's remainingGrams and recalculate remainingPounds
       int newRemainingGrams = (seedData['remainingGrams'] as int) - gramsUsed;
+      int newActiveCrops = (seedData['activeCrops'] as int) + 1;
       // Calculate pounds using 28g per ounce and 16 ounces per pound
       double newRemainingPounds =
           double.parse((newRemainingGrams / (28.0 * 16.0)).toStringAsFixed(2));
@@ -78,12 +79,14 @@ class _AddCropDialogState extends State<AddCropDialog> {
       transaction.update(seedRef, {
         'remainingGrams': newRemainingGrams,
         'remainingPounds': newRemainingPounds,
+        'activeCrops': newActiveCrops
       });
       // Add the new crop document within the transaction
       transaction.set(firestore.collection('crops').doc(), {
         'name': _selectedSeedName,
         'seedId': seedDocSnapshot.id, // Use seed document ID to tie to the crop
         'seedGrams': gramsUsed,
+        'stage': 'Germinating',
         'germStart': Timestamp.fromDate(_selectedDate),
         'harvested': false,
         'userId': FirebaseAuth.instance.currentUser?.uid ?? 'unknown',

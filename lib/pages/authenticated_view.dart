@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../pages/home_page.dart';
+import '../pages/crops_page.dart';
+import '../pages/seeds_page.dart';
 import '../pages/profile_page.dart';
 
 import '../widgets/add_crop_dialog.dart';
@@ -159,8 +161,8 @@ class _AuthenticatedViewState extends State<AuthenticatedView>
         },
         children: [
           const HomePage(),
-          const Scaffold(),
-          const Scaffold(),
+          const CropsPage(),
+          SeedsPage(),
           const Scaffold(),
           ProfilePage()
         ],

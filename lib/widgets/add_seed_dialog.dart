@@ -33,6 +33,8 @@ class _AddSeedDialogState extends State<AddSeedDialog> {
         'name': seedName,
         'remainingGrams': remainingGrams,
         'remainingPounds': pounds.toInt(),
+        'activeCrops': 0,
+        'harvestedCrops': 0,
         'userId': FirebaseAuth.instance.currentUser?.uid ?? 'unknown',
       });
 
