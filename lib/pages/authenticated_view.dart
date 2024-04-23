@@ -21,7 +21,7 @@ class _AuthenticatedViewState extends State<AuthenticatedView>
   final PageController _pageController = PageController();
 
   late AnimationController _animationController;
-  late Animation<double> _animation;
+  // late Animation<double> _animation;
   OverlayEntry? _overlayEntry;
   bool isMenuOpen = false;
 
@@ -32,10 +32,10 @@ class _AuthenticatedViewState extends State<AuthenticatedView>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    _animation = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    );
+    // _animation = CurvedAnimation(
+    //   parent: _animationController,
+    //   curve: Curves.easeInOut,
+    // );
   }
 
   @override
@@ -77,12 +77,12 @@ class _AuthenticatedViewState extends State<AuthenticatedView>
 
   OverlayEntry _createOverlayEntry() {
     // Get the screen size
-    final Size screenSize = MediaQuery.of(context).size;
+    // final Size screenSize = MediaQuery.of(context).size;
     // Get the bottom padding (useful for devices with a bottom navigation bar like iPhone X and up)
     final double bottomPadding = MediaQuery.of(context).padding.bottom;
     // Get the FAB size and positions (assuming it's a standard FAB for simplicity)
     const double fabSize = 56.0;
-    const double fabIconSize = 24.0; // The size of the icon inside the FAB
+    // const double fabIconSize = 24.0; // The size of the icon inside the FAB
     const double fabMargin = 16.0; // The standard margin for FAB from the edges
 
     // Calculate the positions for the buttons
@@ -129,7 +129,7 @@ class _AuthenticatedViewState extends State<AuthenticatedView>
       _animationController.reverse();
     } else {
       _overlayEntry = _createOverlayEntry();
-      Overlay.of(context)?.insert(_overlayEntry!);
+      Overlay.of(context).insert(_overlayEntry!);
       _animationController.forward();
     }
     isMenuOpen = !isMenuOpen;
@@ -161,6 +161,7 @@ class _AuthenticatedViewState extends State<AuthenticatedView>
           const HomePage(),
           const Scaffold(),
           const Scaffold(),
+          const Scaffold(),
           ProfilePage()
         ],
       ),
@@ -174,6 +175,7 @@ class _AuthenticatedViewState extends State<AuthenticatedView>
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.house), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.grass), label: 'Crops'),
+          BottomNavigationBarItem(icon: Icon(Icons.spa), label: 'Seeds'),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'Data'),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_circle), label: 'Profile'),

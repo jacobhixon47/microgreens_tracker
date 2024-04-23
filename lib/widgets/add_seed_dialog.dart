@@ -45,18 +45,36 @@ class _AddSeedDialogState extends State<AddSeedDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Add Seed'),
+      title: const Text(
+        'Add Seed',
+        style: TextStyle(color: Colors.white),
+      ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             TextField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Seed Name'),
+              decoration: const InputDecoration(
+                  labelText: 'Seed Name',
+                  labelStyle: TextStyle(color: Colors.white),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green)),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green)),
+                  focusColor: Colors.white,
+                  fillColor: Colors.white),
             ),
             TextField(
               controller: _weightController,
-              decoration: const InputDecoration(labelText: 'Weight in Pounds'),
+              decoration: const InputDecoration(
+                labelText: 'Weight in Pounds',
+                labelStyle: TextStyle(color: Colors.white),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green)),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green)),
+              ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
             ),
@@ -65,12 +83,15 @@ class _AddSeedDialogState extends State<AddSeedDialog> {
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text('Cancel'),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(color: Colors.white),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
           onPressed: addSeed,
-          child: const Text('Add'),
+          child: const Text('Add', style: TextStyle(color: Colors.white)),
         ),
       ],
     );

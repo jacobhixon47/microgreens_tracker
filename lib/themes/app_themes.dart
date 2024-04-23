@@ -15,7 +15,8 @@ class AppThemes {
   static final darkTheme = ThemeData(
       brightness: Brightness.dark,
       highlightColor: Colors.greenAccent,
-      primaryColor: Colors.lightBlue[800],
+      primaryColor: Colors.green,
+      focusColor: Colors.green,
       fontFamily: 'Impact',
       textTheme: const TextTheme(
         displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
@@ -23,6 +24,8 @@ class AppThemes {
         bodyMedium:
             TextStyle(fontSize: 14.0, fontFamily: 'Hind', color: Colors.white),
       ),
+      textSelectionTheme:
+          const TextSelectionThemeData(cursorColor: Colors.white),
       buttonTheme: const ButtonThemeData(
           buttonColor: Colors.greenAccent,
           highlightColor: Colors.greenAccent,
@@ -30,5 +33,8 @@ class AppThemes {
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.green,
           foregroundColor: Colors.black87,
-          shape: CircleBorder()));
+          shape: CircleBorder()),
+      dialogTheme: const DialogTheme(
+          contentTextStyle: TextStyle(color: Colors.green),
+          iconColor: Colors.green));
 }
