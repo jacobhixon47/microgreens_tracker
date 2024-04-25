@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fl_chart/fl_chart.dart';
+// import 'package:fl_chart/fl_chart.dart';
 
 class SingleCropPage extends StatefulWidget {
   final String cropId;
@@ -36,6 +36,18 @@ class _SingleCropPageState extends State<SingleCropPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (cropData == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Details',
+            style: TextStyle(fontSize: 25, fontStyle: FontStyle.normal),
+          ),
+          backgroundColor: Colors.transparent,
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
     // Calculate the days in the current stage based on the stage
     String daysInStage = '';
     DateTime stageStartDate;
@@ -86,7 +98,7 @@ class _SingleCropPageState extends State<SingleCropPage> {
                           const SizedBox(height: 10),
                           buildStatistic("Stage", cropData!['stage']),
                           buildStatistic("Days in Stage", daysInStage),
-                          buildStatistic("Seeds", '${cropData!['seedGrams']}g')
+                          buildStatistic("Seeds", "${cropData!['seedGrams']}g")
                           // Other statistics can be added here
                         ],
                       ),
