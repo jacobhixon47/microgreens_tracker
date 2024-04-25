@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../pages/single_seed_page.dart';
 
 class SeedCard extends StatelessWidget {
   final String seedId;
@@ -30,7 +31,12 @@ class SeedCard extends StatelessWidget {
           ],
         ),
         onTap: () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => SeedDetailPage(seedId: seedId)));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SingleSeedPage(seedId: seedId),
+            ),
+          );
         },
       ),
     );

@@ -35,6 +35,9 @@ class _AddSeedDialogState extends State<AddSeedDialog> {
         'remainingPounds': pounds.toInt(),
         'activeCrops': 0,
         'harvestedCrops': 0,
+        'avgGermination': 0,
+        'avgGrowth': 0,
+        'avgSeedToHarvest': 0,
         'userId': FirebaseAuth.instance.currentUser?.uid ?? 'unknown',
       });
 

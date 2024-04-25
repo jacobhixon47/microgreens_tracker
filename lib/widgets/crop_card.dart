@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../pages/single_crop_page.dart';
 
 class CropCard extends StatelessWidget {
   final String cropId;
@@ -82,7 +83,12 @@ class CropCard extends StatelessWidget {
               )
             : const SizedBox.shrink(),
         onTap: () {
-          // Detail page navigation can be implemented here if needed
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SingleCropPage(cropId: cropId),
+            ),
+          );
         },
       ),
     );

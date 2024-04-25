@@ -81,22 +81,56 @@ class _CropsPageState extends State<CropsPage> {
       var cropData = cropSnap.data() as Map<String, dynamic>;
       String? seedId = cropData['seedId'];
 
-      if (seedId != null &&
-          newStage == 'Harvested' &&
-          cropData['stage'] == 'Growing') {
-        // Fetch the related seed
+      if (seedId != null) {
         DocumentReference seedRef = firestore.collection('seeds').doc(seedId);
         DocumentSnapshot seedSnap = await transaction.get(seedRef);
         var seedData = seedSnap.data() as Map<String, dynamic>;
 
-        int activeCrops = seedData['activeCrops'] ?? 0;
-        int harvestedCrops = seedData['harvestedCrops'] ?? 0;
+        DateTime stageStartDate = (cropData['germStart'] as Timestamp)
+            .toDate(); // Default to germStart
 
-        // Update seed counts
-        transaction.update(seedRef, {
-          'activeCrops': activeCrops > 0 ? activeCrops - 1 : 0,
-          'harvestedCrops': harvestedCrops + 1,
-        });
+        if (newStage == 'Growing') {
+          stageStartDate = (cropData['germStart'] as Timestamp).toDate();
+          int daysInGermination = now.difference(stageStartDate).inDays;
+
+          // Update average germination time
+          double newAvgGermination = ((seedData['avgGermination'] ?? 0) *
+                      (seedData['harvestedCrops'] ?? 0) +
+                  daysInGermination) /
+              ((seedData['harvestedCrops'] ?? 0) + 1);
+          transaction.update(seedRef, {
+            'avgGermination': newAvgGermination,
+          });
+
+          // Set growStart for growth period calculation
+          cropUpdates['growStart'] = Timestamp.fromDate(now);
+        }
+
+        if (newStage == 'Harvested' && cropData['stage'] == 'Growing') {
+          stageStartDate = (cropData['growStart'] as Timestamp).toDate();
+          int daysInGrowth = now.difference(stageStartDate).inDays;
+          int totalDaysFromSeed = now
+              .difference((cropData['germStart'] as Timestamp).toDate())
+              .inDays;
+
+          // Update average growth time
+          double newAvgGrowth = ((seedData['avgGrowth'] ?? 0) *
+                      (seedData['harvestedCrops'] ?? 0) +
+                  daysInGrowth) /
+              ((seedData['harvestedCrops'] ?? 0) + 1);
+
+          // Update average seed to harvest time
+          double newAvgSeedToHarvest = ((seedData['avgSeedToHarvest'] ?? 0) *
+                      (seedData['harvestedCrops'] ?? 0) +
+                  totalDaysFromSeed) /
+              ((seedData['harvestedCrops'] ?? 0) + 1);
+
+          transaction.update(seedRef, {
+            'avgGrowth': newAvgGrowth,
+            'avgSeedToHarvest': newAvgSeedToHarvest,
+            'harvestedCrops': FieldValue.increment(1)
+          });
+        }
       }
 
       // Update the crop document
@@ -104,7 +138,6 @@ class _CropsPageState extends State<CropsPage> {
     }).then((result) {
       fetchCrops(); // Re-fetch crops to update the UI
     }).catchError((error) {
-      // Handle errors here, such as displaying a snackbar message
       debugPrint("Error updating crop stage: $error");
     });
   }
